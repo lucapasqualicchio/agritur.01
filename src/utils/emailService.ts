@@ -21,8 +21,9 @@ export interface BookingEmailData {
 export const sendBookingEmail = async (data: BookingEmailData): Promise<boolean> => {
   try {
     const templateParams = {
-      to_email: 'luca.pasqualicchio@gmail.com',
-      from_email: data.email,
+      // Invia la mail al cliente e usa il suo indirizzo come reply-to
+      to_email: data.email,
+      reply_to: data.email,
       date: data.date,
       phone: data.phone,
       meal_type: data.mealType === 'lunch' ? 'Pranzo' : 'Cena',

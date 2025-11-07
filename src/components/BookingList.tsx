@@ -162,8 +162,8 @@ const BookingList: React.FC = () => {
 
         {bookings.length > 0 && (
           <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h3 className="text-sm font-medium text-blue-900 mb-2">📧 Email inviate a:</h3>
-            <p className="text-sm text-blue-800">luca.pasqualicchio@gmail.com</p>
+            <h3 className="text-sm font-medium text-blue-900 mb-2">📧 Email inviate</h3>
+            <p className="text-sm text-blue-800">Le notifiche sono state inviate agli indirizzi indicati nelle prenotazioni.</p>
             <p className="text-xs text-blue-600 mt-2">
               Tutte le prenotazioni sono state notificate via email e salvate localmente.
             </p>

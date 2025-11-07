@@ -112,7 +112,7 @@ const BookingForm: React.FC = () => {
             {emailStatus === 'sent' ? (
               <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
                 <p className="text-sm text-green-800">
-                  <strong>✅ Email inviata!</strong> I dettagli della tua prenotazione sono stati inviati a luca.pasqualicchio@gmail.com.
+                  <strong>✅ Email inviata!</strong> I dettagli della tua prenotazione sono stati inviati a {formData.email}.
                 </p>
               </div>
             ) : (
