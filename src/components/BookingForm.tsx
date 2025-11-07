@@ -18,6 +18,7 @@ const BookingForm: React.FC = () => {
   const location = useLocation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [emailStatus, setEmailStatus] = useState<'idle' | 'sent' | 'failed'>('idle');
   
   // Prendi la data dal parametro URL o dal state
   const selectedDate = location.state?.date || new Date().toISOString().split('T')[0];
@@ -46,32 +47,32 @@ const BookingForm: React.FC = () => {
     setIsSubmitting(true);
     
     try {
-      // Invia email reale con EmailJS
+      // Salva SEMPRE la prenotazione in localStorage
+      saveBookingToStorage({
+        ...formData,
+        timestamp: new Date().toISOString()
+      });
+
+      // Prova a inviare email reale con EmailJS
       const emailSuccess = await sendBookingEmail(formData);
-      
-      if (emailSuccess) {
-        // Salva la prenotazione in localStorage
-        saveBookingToStorage({
-          ...formData,
-          timestamp: new Date().toISOString()
-        });
-        
-        setIsSubmitting(false);
-        setShowSuccess(true);
-        
-        // Torna alla home dopo 3 secondi
-        setTimeout(() => {
-          navigate('/');
-        }, 3000);
-      } else {
-        // Errore nell'invio email
-        setIsSubmitting(false);
-        alert('Errore nell\'invio della prenotazione. Riprova più tardi.');
-      }
+      setEmailStatus(emailSuccess ? 'sent' : 'failed');
+
+      setIsSubmitting(false);
+      setShowSuccess(true);
+
+      // Torna alla home dopo 3 secondi
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
     } catch (error) {
       console.error('Errore nella prenotazione:', error);
       setIsSubmitting(false);
-      alert('Si è verificato un errore. Riprova più tardi.');
+      // Mostra comunque la conferma, perché il salvataggio locale è avvenuto
+      setEmailStatus('failed');
+      setShowSuccess(true);
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
     }
   };
 
@@ -106,14 +107,21 @@ const BookingForm: React.FC = () => {
             </div>
             <h2 className="text-2xl font-bold text-gray-900 mb-2">Prenotazione inviata!</h2>
             <p className="text-gray-600 mb-4">
-              La tua prenotazione è stata registrata con successo! 
-              Una email di conferma è stata inviata a luca.pasqualicchio@gmail.com
+              La tua prenotazione è stata registrata con successo!
             </p>
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
-              <p className="text-sm text-green-800">
-                <strong>✅ Email inviata!</strong> I dettagli della tua prenotazione sono stati inviati via email.
-              </p>
-            </div>
+            {emailStatus === 'sent' ? (
+              <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
+                <p className="text-sm text-green-800">
+                  <strong>✅ Email inviata!</strong> I dettagli della tua prenotazione sono stati inviati a luca.pasqualicchio@gmail.com.
+                </p>
+              </div>
+            ) : (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
+                <p className="text-sm text-yellow-800">
+                  <strong>⚠️ Email non inviata.</strong> La prenotazione è stata comunque salvata. Se il problema persiste, verifica le credenziali EmailJS (Service ID, Template ID, Public Key) e i campi del template.
+                </p>
+              </div>
+            )}
             <p className="text-sm text-gray-500">Verrai reindirizzato alla homepage tra pochi secondi...</p>
           </div>
         ) : (
