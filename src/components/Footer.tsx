@@ -1,4 +1,5 @@
 import { Mountain } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
@@ -15,6 +16,14 @@ export default function Footer() {
           <p className="text-gray-500 text-sm">
             Via Roma, Trento (TN) | Tel: 327 113 1188 | info@agritur.it
           </p>
+          <div className="mt-4 pt-4 border-t border-gray-800">
+            <Link 
+              to="/prenotazioni" 
+              className="text-green-400 hover:text-green-300 text-sm font-medium transition-colors"
+            >
+              📋 Visualizza Prenotazioni
+            </Link>
+          </div>
           <p className="text-gray-600 text-sm mt-6">
             © 2024 Agritur. Tutti i diritti riservati.
           </p>

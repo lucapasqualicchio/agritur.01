@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface DayAvailability {
   date: Date;
@@ -6,6 +7,7 @@ interface DayAvailability {
 }
 
 const BookingCalendar: React.FC = () => {
+  const navigate = useNavigate();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [availability, setAvailability] = useState<DayAvailability[]>([]);
@@ -119,9 +121,15 @@ const BookingCalendar: React.FC = () => {
   const handleDateClick = (day: number) => {
     const status = getAvailabilityStatus(day);
     if (status !== 'unavailable') {
-      setSelectedDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), day));
-      // Qui potresti aggiungere la logica per procedere con la prenotazione
-      alert(`Hai selezionato il giorno ${day}. Status: ${getStatusText(status)}`);
+      const selectedDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+      setSelectedDate(selectedDate);
+      
+      // Naviga alla pagina di prenotazione con la data selezionata
+      navigate('/prenota', { 
+        state: { 
+          date: selectedDate.toISOString().split('T')[0] 
+        } 
+      });
     }
   };
 

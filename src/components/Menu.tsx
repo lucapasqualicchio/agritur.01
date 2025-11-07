@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function Menu() {
   return (
     <section className="py-16 bg-white">
@@ -38,12 +40,12 @@ export default function Menu() {
             Crediamo in un'agricoltura sostenibile, nel rispetto dei cicli naturali e delle persone che lavorano la terra.
             Ogni piatto è un omaggio al nostro territorio.
           </p>
-          <a
-            href="#contatti"
+          <Link
+            to="/menu-stagionale"
             className="inline-block bg-white text-green-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition transform hover:scale-105"
           >
             Visualizza il menù stagionale
-          </a>
+          </Link>
         </div>
       </div>
     </section>
