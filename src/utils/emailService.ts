@@ -1,10 +1,10 @@
 import emailjs from 'emailjs-com';
 
-// Configurazione EmailJS - questi dati verranno dal tuo account EmailJS
+// Configurazione EmailJS - variabili d'ambiente
 const EMAILJS_CONFIG = {
-  SERVICE_ID: 'service_your_service_id', // Sostituisci con il tuo Service ID
-  TEMPLATE_ID: 'template_booking', // Sostituisci con il tuo Template ID
-  PUBLIC_KEY: 'your_public_key' // Sostituisci con la tua Public Key
+  SERVICE_ID: import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_vk971sd',
+  TEMPLATE_ID: import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_18nidqa',
+  PUBLIC_KEY: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '03m8lstH10s3sI9Qr3LgA'
 };
 
 export interface BookingEmailData {
