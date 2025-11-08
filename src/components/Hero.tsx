@@ -43,7 +43,7 @@ export default function Hero() {
           Un luogo dove la tradizione incontra la genuinità
         </p>
         <a
-          href="#contatti"
+          href="#booking-calendar"
           className="inline-block bg-green-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-green-700 transition transform hover:scale-105"
         >
           Prenota ora la tua esperienza

@@ -1,10 +1,18 @@
 import emailjs from 'emailjs-com';
 
-// Configurazione EmailJS - variabili d'ambiente
+// Configurazione EmailJS - variabili d'ambiente (senza fallback)
 const EMAILJS_CONFIG = {
-  SERVICE_ID: import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_vk971sd',
-  TEMPLATE_ID: import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_18nidqa',
-  PUBLIC_KEY: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '03m8lstH10s3sI9Qr3LgA'
+  SERVICE_ID: import.meta.env.VITE_EMAILJS_SERVICE_ID,
+  TEMPLATE_ID: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+  PUBLIC_KEY: import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+};
+
+const isConfigValid = () => {
+  return Boolean(
+    EMAILJS_CONFIG.SERVICE_ID &&
+    EMAILJS_CONFIG.TEMPLATE_ID &&
+    EMAILJS_CONFIG.PUBLIC_KEY
+  );
 };
 
 export interface BookingEmailData {
@@ -20,6 +28,10 @@ export interface BookingEmailData {
 
 export const sendBookingEmail = async (data: BookingEmailData): Promise<boolean> => {
   try {
+    if (!isConfigValid()) {
+      console.error('EmailJS non configurato correttamente: controlla SERVICE_ID, TEMPLATE_ID, PUBLIC_KEY.');
+      return false;
+    }
     const templateParams = {
       // Invia la mail al cliente e usa il suo indirizzo come reply-to
       to_email: data.email,

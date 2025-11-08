@@ -29,7 +29,9 @@ function App() {
             <Alessandro />
             <Products />
             <Menu />
-            <BookingCalendar />
+            <div id="booking-calendar">
+              <BookingCalendar />
+            </div>
             <Reviews />
             <Location />
             <Contact />
