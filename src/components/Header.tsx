@@ -68,30 +68,30 @@ export default function Header() {
               >
                 Prenotazioni
               </Link>
-              
-              <a
-                href="#chi-siamo"
+
+              <Link
+                to="/chi-siamo"
                 className="block px-4 py-3 text-lg font-semibold text-gray-900 hover:bg-green-50 hover:text-green-700 rounded-lg transition"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Chi siamo
-              </a>
-              
-              <a
-                href="#la-storia"
+              </Link>
+
+              <Link
+                to="/prodotti"
                 className="block px-4 py-3 text-lg font-semibold text-gray-900 hover:bg-green-50 hover:text-green-700 rounded-lg transition"
                 onClick={() => setIsMenuOpen(false)}
               >
-                La Storia
-              </a>
-              
-              <a
-                href="#contatti"
+                Prodotti
+              </Link>
+
+              <Link
+                to="/contatti"
                 className="block px-4 py-3 text-lg font-semibold text-gray-900 hover:bg-green-50 hover:text-green-700 rounded-lg transition"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Info e contatti
-              </a>
+              </Link>
             </nav>
 
             <div className="mt-8 pt-8 border-t border-gray-200">

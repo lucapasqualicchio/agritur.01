@@ -1,9 +1,15 @@
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import SEO from './SEO';
 
 export default function PrivacyPolicy() {
   return (
     <div className="min-h-screen bg-white">
+      <SEO
+        title="Privacy Policy – Agritur: dati personali e diritti dell’utente"
+        description="Informativa privacy Agritur: trattiamo i dati personali in modo sicuro. Finalità, basi giuridiche, conservazione, sicurezza e diritti esercitabili."
+        urlPath="/privacy-policy"
+      />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <Link 
           to="/" 

@@ -1,0 +1,9 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Favicon outline in stile icona Header (Mountain) -->
+  <g fill="none" stroke="#15803d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Triangolo montagna -->
+    <path d="M16 46 L32 18 L48 46 Z" />
+    <!-- Cresta interna (notch) -->
+    <path d="M24 42 L32 30 L36 36 L40 42" />
+  </g>
+</svg>

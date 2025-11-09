@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f5132"/>
+      <stop offset="100%" stop-color="#198754"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <g fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" transform="translate(0,30)">
+    <path d="M420 470 L600 170 L780 470 Z" />
+    <path d="M500 430 L600 270 L650 330 L700 430" />
+  </g>
+  <text x="600" y="560" text-anchor="middle" font-family="Arial, sans-serif" font-size="56" font-weight="700" fill="#ffffff">AGRITUR</text>
+</svg>

@@ -1,9 +1,15 @@
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import SEO from './SEO';
 
 export default function TermsConditions() {
   return (
     <div className="min-h-screen bg-white">
+      <SEO
+        title="Termini e Condizioni – Agritur: uso del sito e prenotazioni"
+        description="Condizioni d’uso di Agritur: prenotazioni, pagamenti, cancellazioni, responsabilità e legge applicabile. Contatti e aggiornamenti dei termini."
+        urlPath="/terms-conditions"
+      />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <Link 
           to="/" 

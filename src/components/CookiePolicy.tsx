@@ -1,9 +1,15 @@
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import SEO from './SEO';
 
 export default function CookiePolicy() {
   return (
     <div className="min-h-screen bg-white">
+      <SEO
+        title="Cookie Policy – Agritur: consenso, preferenze e analytics"
+        description="Cookie Policy di Agritur: tipologie di cookie, finalità, gestione del consenso, preferenze browser, terze parti e diritti GDPR."
+        urlPath="/cookie-policy"
+      />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <Link 
           to="/" 
