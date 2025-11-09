@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "start:admin": "node server/adminServer.cjs",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
