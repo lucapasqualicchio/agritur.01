@@ -28,7 +28,7 @@ export default function CheckoutPage() {
     if (error) {
       setStatus(String(error));
     } else {
-      setStatus('Ordine salvato con successo.');
+      setStatus('Grazie per il tuo acquisto. Ordine registrato.');
       clearCart();
     }
   }
