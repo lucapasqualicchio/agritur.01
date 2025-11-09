@@ -21,10 +21,17 @@ import NotFound from './components/NotFound';
 import AboutPage from './components/pages/AboutPage';
 import ProductsPage from './components/pages/ProductsPage';
 import ContactPage from './components/pages/ContactPage';
+import ProductCatalog from './components/shop/ProductCatalog';
+import CartPage from './components/shop/CartPage';
+import CheckoutPage from './components/shop/CheckoutPage';
+import AdminLogin from './components/admin/AdminLogin';
+import AdminOrdersPage from './components/admin/AdminOrdersPage';
+import { CartProvider } from './context/CartContext';
 
 function App() {
   return (
     <Router>
+      <CartProvider>
       <Routes>
         <Route path="/menu-stagionale" element={<MenuSeasonale />} />
         <Route path="/prenota" element={<BookingForm />} />
@@ -36,6 +43,13 @@ function App() {
         <Route path="/chi-siamo" element={<AboutPage />} />
         <Route path="/prodotti" element={<ProductsPage />} />
         <Route path="/contatti" element={<ContactPage />} />
+        {/* E-commerce */}
+        <Route path="/shop" element={<ProductCatalog />} />
+        <Route path="/carrello" element={<CartPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        {/* Admin */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin" element={<AdminOrdersPage />} />
         <Route path="/" element={
           <div className="min-h-screen bg-white">
             <Header />
@@ -56,6 +70,7 @@ function App() {
         } />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      </CartProvider>
     </Router>
   );
 }

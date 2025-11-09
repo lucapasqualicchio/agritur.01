@@ -9,10 +9,10 @@ export default function Header() {
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex justify-between items-center">
-          <div className="flex items-center space-x-2">
+          <Link to="/" aria-label="Vai alla Home" className="flex items-center space-x-2">
             <Mountain className="h-8 w-8 text-green-700" />
             <span className="text-2xl font-bold text-green-800">Agritur</span>
-          </div>
+          </Link>
           
           <div className="flex items-center space-x-4">
             <a
@@ -47,10 +47,10 @@ export default function Header() {
         >
           <div className="p-6">
             <div className="flex justify-between items-center mb-8">
-              <div className="flex items-center space-x-2">
+              <Link to="/" aria-label="Vai alla Home" className="flex items-center space-x-2" onClick={() => setIsMenuOpen(false)}>
                 <Mountain className="h-8 w-8 text-green-700" />
                 <span className="text-2xl font-bold text-green-800">Agritur</span>
-              </div>
+              </Link>
               <button
                 onClick={() => setIsMenuOpen(false)}
                 className="p-2 rounded-md text-gray-600 hover:text-green-700 hover:bg-gray-100 transition"
@@ -91,6 +91,22 @@ export default function Header() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Info e contatti
+              </Link>
+
+              <Link
+                to="/shop"
+                className="block px-4 py-3 text-lg font-semibold text-gray-900 hover:bg-green-50 hover:text-green-700 rounded-lg transition"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Shop
+              </Link>
+
+              <Link
+                to="/carrello"
+                className="block px-4 py-3 text-lg font-semibold text-gray-900 hover:bg-green-50 hover:text-green-700 rounded-lg transition"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Carrello
               </Link>
             </nav>
 
