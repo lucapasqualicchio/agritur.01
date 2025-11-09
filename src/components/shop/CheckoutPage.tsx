@@ -8,6 +8,7 @@ import { useState } from 'react';
 export default function CheckoutPage() {
   const { items, total, clearCart } = useCart();
   const [status, setStatus] = useState<string>('');
+  const [finalTotal, setFinalTotal] = useState<number | null>(null);
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -24,6 +25,7 @@ export default function CheckoutPage() {
     } else {
       const codeText = orderCode ? ` Codice: ${orderCode}` : '';
       setStatus(`Grazie per il tuo acquisto. Ordine registrato.${codeText}`);
+      setFinalTotal(total);
       clearCart();
     }
   }
@@ -39,7 +41,7 @@ export default function CheckoutPage() {
       <main className="py-12">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-8">Checkout</h1>
-          <p className="mb-6">Totale: <span className="font-bold">€ {total.toFixed(2)}</span></p>
+          <p className="mb-6">Totale: <span className="font-bold">€ {(finalTotal ?? total).toFixed(2)}</span></p>
           {items.length === 0 ? (
             <p className="text-gray-700">Il carrello è vuoto.</p>
           ) : (

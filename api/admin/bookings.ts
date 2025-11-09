@@ -39,6 +39,14 @@ export default async function handler(req: any, res: any) {
     .from('bookings')
     .select('*')
     .order('created_at', { ascending: false });
-  if (error) return res.status(500).json({ error: String(error.message || error) });
+
+  if (error) {
+    const msg = String(error.message || error);
+    // Se la tabella non esiste, restituiamo lista vuota per non bloccare l'admin
+    if (msg.includes("Could not find the table 'public.bookings'")) {
+      return res.status(200).json({ bookings: [], note: 'Tabella bookings non trovata: crea la tabella su Supabase.' });
+    }
+    return res.status(500).json({ error: msg });
+  }
   return res.status(200).json({ bookings: data });
 }
