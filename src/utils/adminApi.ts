@@ -1,8 +1,10 @@
-const API_URL = import.meta.env.VITE_ADMIN_API_URL || 'http://localhost:8787';
+// If VITE_ADMIN_API_URL is not set, default to same-origin (relative paths)
+const API_URL = (import.meta.env.VITE_ADMIN_API_URL || '').trim();
 
 export async function adminLogin(email: string, password: string): Promise<{ token?: string; error?: string }> {
   try {
-    const res = await fetch(`${API_URL}/api/admin/login`, {
+    const base = API_URL ? API_URL : '';
+    const res = await fetch(`${base}/api/admin/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -17,7 +19,8 @@ export async function adminLogin(email: string, password: string): Promise<{ tok
 
 export async function getOrders(token: string): Promise<{ orders?: any[]; error?: string }> {
   try {
-    const res = await fetch(`${API_URL}/api/admin/orders`, {
+    const base = API_URL ? API_URL : '';
+    const res = await fetch(`${base}/api/admin/orders`, {
       method: 'GET',
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -31,7 +34,8 @@ export async function getOrders(token: string): Promise<{ orders?: any[]; error?
 
 export async function getBookings(token: string): Promise<{ bookings?: any[]; error?: string }> {
   try {
-    const res = await fetch(`${API_URL}/api/admin/bookings`, {
+    const base = API_URL ? API_URL : '';
+    const res = await fetch(`${base}/api/admin/bookings`, {
       method: 'GET',
       headers: { Authorization: `Bearer ${token}` },
     });
