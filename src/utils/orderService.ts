@@ -2,17 +2,11 @@ import { supabase } from './supabaseClient';
 import type { CartItem } from '../context/CartContext';
 
 export type OrderPayload = {
-  buyer_name: string;
-  buyer_surname: string;
-  buyer_email: string;
-  phone: string;
-  shipping_address: string;
-  city: string;
-  zip: string;
-  payment_method: 'card' | 'paypal';
+  email: string;
+  phone?: string;
   amount: number;
-  items: { product_id: string; name: string; price: number; quantity: number }[];
-  created_at?: string;
+  people?: string; // numero totale pezzi/acquisti, in testo
+  date?: string;   // opzionale (YYYY-MM-DD)
 };
 
 export async function saveOrder(payload: OrderPayload) {
@@ -27,17 +21,30 @@ export async function saveOrder(payload: OrderPayload) {
     });
     const json = await res.json();
     if (!res.ok) return { error: json.error || 'Errore nel salvataggio ordine' };
-    return { data: json.data };
+    const orderCode = Array.isArray(json.data) ? json.data[0]?.orders : json.data?.orders;
+    return { data: json.data, orderCode };
   } catch (e) {
     // Fallback: salva direttamente via Supabase client se configurato
     if (!supabase) {
       return { error: 'Supabase non configurato. Imposta VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY.' };
     }
+    // Fallback diretto: mappa ai nomi colonna forniti
+    const row = {
+      orders: `ORD-${Date.now()}`,
+      email: payload.email,
+      phone: payload.phone || null,
+      date: payload.date || null,
+      people: payload.people || null,
+      status: 'nuovo',
+      created_et: new Date().toISOString(),
+      amount: payload.amount,
+    };
     const { data, error } = await supabase
       .from('orders')
-      .insert([{ ...payload, created_at: new Date().toISOString() }])
+      .insert([row])
       .select();
-    return { data, error };
+    const orderCode = Array.isArray(data) ? data[0]?.orders : (data as any)?.orders;
+    return { data, error, orderCode };
   }
 }
 
@@ -48,4 +55,8 @@ export function mapCartItems(items: CartItem[]) {
     price: i.product.price,
     quantity: i.quantity,
   }));
+}
+
+export function totalPieces(items: CartItem[]) {
+  return items.reduce((sum, i) => sum + i.quantity, 0);
 }

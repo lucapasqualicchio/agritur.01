@@ -2,7 +2,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 import { useCart } from '../../context/CartContext';
 import SEO from '../SEO';
-import { mapCartItems, saveOrder } from '../../utils/orderService';
+import { mapCartItems, saveOrder, totalPieces } from '../../utils/orderService';
 import { useState } from 'react';
 
 export default function CheckoutPage() {
@@ -13,22 +13,17 @@ export default function CheckoutPage() {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
     const payload = {
-      buyer_name: String(form.get('name') || ''),
-      buyer_surname: String(form.get('surname') || ''),
-      buyer_email: String(form.get('email') || ''),
+      email: String(form.get('email') || ''),
       phone: String(form.get('phone') || ''),
-      shipping_address: String(form.get('address') || ''),
-      city: String(form.get('city') || ''),
-      zip: String(form.get('zip') || ''),
-      payment_method: (String(form.get('payment') || 'card') as 'card' | 'paypal'),
       amount: total,
-      items: mapCartItems(items),
+      people: String(totalPieces(items)),
     };
-    const { data, error } = await saveOrder(payload);
+    const { data, error, orderCode } = await saveOrder(payload);
     if (error) {
       setStatus(String(error));
     } else {
-      setStatus('Grazie per il tuo acquisto. Ordine registrato.');
+      const codeText = orderCode ? ` Codice: ${orderCode}` : '';
+      setStatus(`Grazie per il tuo acquisto. Ordine registrato.${codeText}`);
       clearCart();
     }
   }

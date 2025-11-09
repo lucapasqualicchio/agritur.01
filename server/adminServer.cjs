@@ -103,7 +103,7 @@ const server = http.createServer(async (req, res) => {
     const { data, error } = await supabase
       .from('orders')
       .select('*')
-      .order('created_at', { ascending: false });
+      .order('created_et', { ascending: false });
     if (error) return json(res, 500, { error: String(error.message || error) });
     return json(res, 200, { orders: data });
   }

@@ -13,6 +13,17 @@ function allowCors(res: any) {
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
 }
 
+function generateOrderCode() {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  const d = String(now.getDate()).padStart(2, '0');
+  const h = String(now.getHours()).padStart(2, '0');
+  const min = String(now.getMinutes()).padStart(2, '0');
+  const rand = Math.random().toString(36).slice(2, 6).toUpperCase();
+  return `ORD-${y}${m}${d}-${h}${min}-${rand}`;
+}
+
 export default async function handler(req: any, res: any) {
   allowCors(res);
   if (req.method === 'OPTIONS') return res.status(204).end();
@@ -20,32 +31,30 @@ export default async function handler(req: any, res: any) {
 
   if (!supabase) return res.status(500).json({ error: 'Supabase non configurato' });
 
-  // Basic payload validation
+  // Payload previsto: { email, phone?, amount, people?, date? }
   const body = req.body || {};
-  const payload = {
-    buyer_name: String(body.buyer_name || ''),
-    buyer_surname: String(body.buyer_surname || ''),
-    buyer_email: String(body.buyer_email || ''),
-    phone: String(body.phone || ''),
-    shipping_address: String(body.shipping_address || ''),
-    city: String(body.city || ''),
-    zip: String(body.zip || ''),
-    payment_method: String(body.payment_method || 'card'),
-    amount: Number(body.amount || 0),
-    items: Array.isArray(body.items) ? body.items : [],
-    created_at: new Date().toISOString(),
-  };
+  const email = String(body.email || '');
+  const phone = body.phone != null ? String(body.phone) : null;
+  const amount = Number(body.amount || 0);
+  const people = body.people != null ? String(body.people) : null;
+  const date = body.date != null ? String(body.date) : null; // formato YYYY-MM-DD se presente
 
-  const required = ['buyer_name','buyer_surname','buyer_email'];
-  for (const k of required) {
-    if (!payload[k as keyof typeof payload]) {
-      return res.status(400).json({ error: `Campo mancante: ${k}` });
-    }
-  }
+  if (!email) return res.status(400).json({ error: 'Campo mancante: email' });
+
+  const row = {
+    orders: generateOrderCode(),
+    email,
+    phone,
+    date: date || null,
+    people: people || null,
+    status: 'nuovo',
+    created_et: new Date().toISOString(),
+    amount,
+  };
 
   const { data, error }: { data: any; error: PostgrestError | null } = await supabase
     .from('orders')
-    .insert([payload])
+    .insert([row])
     .select();
 
   if (error) return res.status(500).json({ error: String(error.message || error) });

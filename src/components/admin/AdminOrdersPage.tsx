@@ -5,18 +5,14 @@ import { useEffect, useState } from 'react';
 import { getOrders, getBookings } from '../../utils/adminApi';
 
 type OrderRow = {
-  id: number;
-  buyer_name: string;
-  buyer_surname: string;
-  buyer_email: string;
-  phone: string;
-  shipping_address: string;
-  city: string;
-  zip: string;
-  payment_method: string;
-  amount: number;
-  created_at: string;
-  items: any;
+  orders: string;
+  email: string;
+  phone?: string;
+  date?: string;
+  people?: string;
+  status?: string;
+  created_et: string;
+  amount?: number;
 };
 
 type BookingRow = {
@@ -71,25 +67,25 @@ export default function AdminOrdersPage() {
               <table className="min-w-full text-sm">
                 <thead>
                   <tr className="bg-gray-100 text-left">
-                    <th className="p-3">Data</th>
-                    <th className="p-3">Cliente</th>
+                    <th className="p-3">Codice</th>
+                    <th className="p-3">Creato</th>
                     <th className="p-3">Email</th>
                     <th className="p-3">Telefono</th>
-                    <th className="p-3">Indirizzo</th>
-                    <th className="p-3">Importo</th>
-                    <th className="p-3">Metodo</th>
+                    <th className="p-3">Totale</th>
+                    <th className="p-3">Persone</th>
+                    <th className="p-3">Stato</th>
                   </tr>
                 </thead>
                 <tbody>
                   {orders.map(o => (
-                    <tr key={o.id} className="border-t">
-                      <td className="p-3">{new Date(o.created_at).toLocaleString()}</td>
-                      <td className="p-3">{o.buyer_name} {o.buyer_surname}</td>
-                      <td className="p-3">{o.buyer_email}</td>
-                      <td className="p-3">{o.phone}</td>
-                      <td className="p-3">{o.shipping_address}, {o.city} {o.zip}</td>
-                      <td className="p-3">€ {o.amount.toFixed(2)}</td>
-                      <td className="p-3">{o.payment_method}</td>
+                    <tr key={o.orders} className="border-t">
+                      <td className="p-3">{o.orders}</td>
+                      <td className="p-3">{new Date(o.created_et).toLocaleString()}</td>
+                      <td className="p-3">{o.email}</td>
+                      <td className="p-3">{o.phone || '-'}</td>
+                      <td className="p-3">€ {Number(o.amount || 0).toFixed(2)}</td>
+                      <td className="p-3">{o.people || '-'}</td>
+                      <td className="p-3">{o.status || 'nuovo'}</td>
                     </tr>
                   ))}
                   {orders.length === 0 && !error && (
