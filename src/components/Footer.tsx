@@ -24,6 +24,17 @@ export default function Footer() {
               📋 Visualizza Prenotazioni
             </Link>
           </div>
+          <div className="mt-4 flex flex-wrap justify-center gap-6 text-xs text-gray-500">
+            <Link to="/privacy-policy" className="hover:text-green-400 transition-colors">
+              Privacy Policy
+            </Link>
+            <Link to="/terms-conditions" className="hover:text-green-400 transition-colors">
+              Termini e Condizioni
+            </Link>
+            <Link to="/cookie-policy" className="hover:text-green-400 transition-colors">
+              Cookie Policy
+            </Link>
+          </div>
           <p className="text-gray-600 text-sm mt-6">
             © 2024 Agritur. Tutti i diritti riservati.
           </p>

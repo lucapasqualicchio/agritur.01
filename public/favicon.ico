@@ -1,0 +1,39 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Sfondo circolare con gradiente naturale -->
+  <circle cx="32" cy="32" r="30" fill="url(#gradient)" stroke="#4a7c59" stroke-width="1"/>
+  
+  <!-- Gradiente per lo sfondo -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8fbc8f"/>
+      <stop offset="50%" stop-color="#6b8e23"/>
+      <stop offset="100%" stop-color="#556b2f"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Collina/sagoma di montagna -->
+  <path d="M16 40 Q 32 20 48 40 Z" fill="#4a7c59" stroke="#3a5c47" stroke-width="1"/>
+  
+  <!-- Sole -->
+  <circle cx="50" cy="18" r="6" fill="#ffd700" stroke="#ffa500" stroke-width="0.5"/>
+  <line x1="50" y1="12" x2="50" y2="8" stroke="#ffa500" stroke-width="1"/>
+  <line x1="56" y1="18" x2="60" y2="18" stroke="#ffa500" stroke-width="1"/>
+  <line x1="50" y1="24" x2="50" y2="28" stroke="#ffa500" stroke-width="1"/>
+  <line x1="44" y1="18" x2="40" y2="18" stroke="#ffa500" stroke-width="1"/>
+  <line x1="53" y1="15" x2="56" y2="12" stroke="#ffa500" stroke-width="1"/>
+  <line x1="53" y1="21" x2="56" y2="24" stroke="#ffa500" stroke-width="1"/>
+  <line x1="47" y1="15" x2="44" y2="12" stroke="#ffa500" stroke-width="1"/>
+  <line x1="47" y1="21" x2="44" y2="24" stroke="#ffa500" stroke-width="1"/>
+  
+  <!-- Casa/stabile agricolo -->
+  <rect x="24" y="28" width="16" height="12" fill="#a0522d" stroke="#8b4513" stroke-width="0.5"/>
+  <polygon points="20,28 44,28 32,22" fill="#8b0000" stroke="#800000" stroke-width="0.5"/>
+  <rect x="28" y="32" width="4" height="8" fill="#d2b48c" stroke="#a0522d" stroke-width="0.3"/>
+  
+  <!-- Albero -->
+  <rect x="12" y="32" width="3" height="8" fill="#8b4513" stroke="#654321" stroke-width="0.3"/>
+  <circle cx="13.5" cy="30" r="5" fill="#228b22" stroke="#006400" stroke-width="0.3"/>
+  
+  <!-- Testo/logo semplificato -->
+  <text x="32" y="55" text-anchor="middle" font-family="Arial, sans-serif" font-size="6" font-weight="bold" fill="#2f4f4f">AGRITUR</text>
+</svg>

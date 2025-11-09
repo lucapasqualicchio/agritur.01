@@ -13,15 +13,23 @@ import Footer from './components/Footer';
 import MenuSeasonale from './components/MenuSeasonale';
 import BookingForm from './components/BookingForm';
 import BookingList from './components/BookingList';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import TermsConditions from './components/TermsConditions';
+import CookiePolicy from './components/CookiePolicy';
+import CookieConsent from './components/CookieConsent';
+import NotFound from './components/NotFound';
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/menu-stagionale" element={<MenuSeasonale />} />
-          <Route path="/prenota" element={<BookingForm />} />
-          <Route path="/prenotazioni" element={<BookingList />} />
-          <Route path="/" element={
+        <Route path="/prenota" element={<BookingForm />} />
+        <Route path="/prenotazioni" element={<BookingList />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-conditions" element={<TermsConditions />} />
+        <Route path="/cookie-policy" element={<CookiePolicy />} />
+        <Route path="/" element={
           <div className="min-h-screen bg-white">
             <Header />
             <Hero />
@@ -36,8 +44,10 @@ function App() {
             <Location />
             <Contact />
             <Footer />
+            <CookieConsent />
           </div>
         } />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
