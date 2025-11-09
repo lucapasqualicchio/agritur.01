@@ -46,3 +46,22 @@ export async function getBookings(token: string): Promise<{ bookings?: any[]; er
     return { error: String(e) };
   }
 }
+
+export async function updateOrderStatus(token: string, orders: string, status: 'nuovo' | 'evaso') {
+  try {
+    const base = API_URL ? API_URL : '';
+    const res = await fetch(`${base}/api/admin/order-status`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ orders, status }),
+    });
+    const json = await res.json();
+    if (!res.ok) return { error: json.error || 'Update failed' };
+    return { data: json.data };
+  } catch (e) {
+    return { error: String(e) };
+  }
+}

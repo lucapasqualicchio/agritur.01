@@ -108,6 +108,26 @@ const server = http.createServer(async (req, res) => {
     return json(res, 200, { orders: data });
   }
 
+  if (path === '/api/admin/order-status' && req.method === 'POST') {
+    if (!supabase) return json(res, 500, { error: 'Supabase non configurato' });
+    const body = await getBody(req);
+    const orders = body.orders;
+    const status = String(body.status || '').trim();
+    if (!orders || typeof orders !== 'string') {
+      return json(res, 400, { error: 'Parametro mancante: orders' });
+    }
+    if (!status || (status !== 'nuovo' && status !== 'evaso')) {
+      return json(res, 400, { error: "Stato non valido: usa 'nuovo' o 'evaso'" });
+    }
+    const { data, error } = await supabase
+      .from('orders')
+      .update({ status })
+      .eq('orders', orders)
+      .select();
+    if (error) return json(res, 500, { error: String(error.message || error) });
+    return json(res, 200, { data });
+  }
+
   if (path === '/api/admin/bookings' && req.method === 'GET') {
     if (!supabase) return json(res, 500, { error: 'Supabase non configurato' });
     const { data, error } = await supabase

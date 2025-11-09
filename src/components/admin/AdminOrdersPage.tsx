@@ -2,7 +2,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 import SEO from '../SEO';
 import { useEffect, useState } from 'react';
-import { getOrders, getBookings } from '../../utils/adminApi';
+import { getOrders, getBookings, updateOrderStatus } from '../../utils/adminApi';
 
 type OrderRow = {
   orders: string;
@@ -32,6 +32,8 @@ export default function AdminOrdersPage() {
   const [bookings, setBookings] = useState<BookingRow[]>([]);
   const [error, setError] = useState<string>('');
   const [tab, setTab] = useState<'orders' | 'bookings'>('orders');
+  const [saving, setSaving] = useState<string>('');
+  const token = localStorage.getItem('admin_token') || '';
 
   useEffect(() => {
     const token = localStorage.getItem('admin_token') || '';
@@ -85,7 +87,31 @@ export default function AdminOrdersPage() {
                       <td className="p-3">{o.phone || '-'}</td>
                       <td className="p-3">€ {Number(o.amount || 0).toFixed(2)}</td>
                       <td className="p-3">{o.people || '-'}</td>
-                      <td className="p-3">{o.status || 'nuovo'}</td>
+                      <td className="p-3">
+                        <div className="flex items-center gap-2">
+                          <select
+                            defaultValue={o.status || 'nuovo'}
+                            onChange={async (e) => {
+                              const next = e.target.value as 'nuovo' | 'evaso';
+                              setSaving(o.orders);
+                              const { error } = await updateOrderStatus(token, o.orders, next);
+                              setSaving('');
+                              if (error) {
+                                setError(String(error));
+                              } else {
+                                setOrders(prev => prev.map(p => p.orders === o.orders ? { ...p, status: next } : p));
+                              }
+                            }}
+                            className="border rounded px-2 py-1"
+                          >
+                            <option value="nuovo">nuovo</option>
+                            <option value="evaso">evaso</option>
+                          </select>
+                          {saving === o.orders && (
+                            <span className="text-xs text-gray-500">Salvataggio…</span>
+                          )}
+                        </div>
+                      </td>
                     </tr>
                   ))}
                   {orders.length === 0 && !error && (

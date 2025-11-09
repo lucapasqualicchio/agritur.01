@@ -37,7 +37,8 @@ export default async function handler(req: any, res: any) {
   const phone = body.phone != null ? String(body.phone) : null;
   const amount = Number(body.amount || 0);
   const people = body.people != null ? String(body.people) : null;
-  const date = body.date != null ? String(body.date) : null; // formato YYYY-MM-DD se presente
+  // Se non fornita, usa la data odierna (YYYY-MM-DD)
+  const date = body.date != null ? String(body.date) : new Date().toISOString().slice(0, 10);
 
   if (!email) return res.status(400).json({ error: 'Campo mancante: email' });
 
@@ -45,7 +46,7 @@ export default async function handler(req: any, res: any) {
     orders: generateOrderCode(),
     email,
     phone,
-    date: date || null,
+    date,
     people: people || null,
     status: 'nuovo',
     created_et: new Date().toISOString(),

@@ -33,7 +33,8 @@ export async function saveOrder(payload: OrderPayload) {
       orders: `ORD-${Date.now()}`,
       email: payload.email,
       phone: payload.phone || null,
-      date: payload.date || null,
+      // Se la data non è fornita, usa oggi in formato YYYY-MM-DD
+      date: payload.date || new Date().toISOString().slice(0, 10),
       people: payload.people || null,
       status: 'nuovo',
       created_et: new Date().toISOString(),
