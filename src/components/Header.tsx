@@ -1,9 +1,12 @@
-import { Mountain, Phone, Menu, X } from 'lucide-react';
+import { Mountain, Phone, Menu, X, ShoppingCart } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { items } = useCart();
+  const cartCount = items.reduce((sum, i) => sum + i.quantity, 0);
 
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
@@ -22,6 +25,20 @@ export default function Header() {
               <Phone className="h-5 w-5" />
               <span>327 113 1188</span>
             </a>
+
+            {/* Cart Icon with live counter */}
+            <Link
+              to="/carrello"
+              aria-label="Vai al carrello"
+              className="relative p-2 rounded-md text-gray-700 hover:text-green-700 hover:bg-gray-100 transition"
+            >
+              <ShoppingCart className="h-6 w-6" />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-green-700 text-white text-xs rounded-full px-1.5 py-0.5 min-w-[1.25rem] text-center">
+                  {cartCount}
+                </span>
+              )}
+            </Link>
             
             {/* Hamburger Menu Button */}
             <button
