@@ -7,6 +7,9 @@ export type OrderPayload = {
   amount: number;
   people?: string; // numero totale pezzi/acquisti, in testo
   date?: string;   // opzionale (YYYY-MM-DD)
+  address?: string; // indirizzo di spedizione
+  payment_method?: string; // tipologia di pagamento (es. 'paypal', 'card')
+  payment_id?: string; // id transazione (es. capture id PayPal)
 };
 
 export async function saveOrder(payload: OrderPayload) {
@@ -36,6 +39,9 @@ export async function saveOrder(payload: OrderPayload) {
       // Se la data non è fornita, usa oggi in formato YYYY-MM-DD
       date: payload.date || new Date().toISOString().slice(0, 10),
       people: payload.people || null,
+      address: payload.address || null,
+      payment_method: payload.payment_method || null,
+      payment_id: payload.payment_id || null,
       status: 'nuovo',
       created_et: new Date().toISOString(),
       amount: payload.amount,

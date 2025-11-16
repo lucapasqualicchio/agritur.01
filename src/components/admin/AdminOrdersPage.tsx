@@ -8,11 +8,14 @@ type OrderRow = {
   orders: string;
   email: string;
   phone?: string;
+  address?: string;
   date?: string;
   people?: string;
   status?: string;
   created_et: string;
   amount?: number;
+  payment_method?: string;
+  payment_id?: string;
 };
 
 type BookingRow = {
@@ -73,8 +76,11 @@ export default function AdminOrdersPage() {
                     <th className="p-3">Creato</th>
                     <th className="p-3">Email</th>
                     <th className="p-3">Telefono</th>
+                    <th className="p-3">Indirizzo</th>
                     <th className="p-3">Totale</th>
                     <th className="p-3">Persone</th>
+                    <th className="p-3">Pagamento</th>
+                    <th className="p-3">Transazione</th>
                     <th className="p-3">Stato</th>
                   </tr>
                 </thead>
@@ -85,8 +91,11 @@ export default function AdminOrdersPage() {
                       <td className="p-3">{new Date(o.created_et).toLocaleString()}</td>
                       <td className="p-3">{o.email}</td>
                       <td className="p-3">{o.phone || '-'}</td>
+                      <td className="p-3">{o.address || '-'}</td>
                       <td className="p-3">€ {Number(o.amount || 0).toFixed(2)}</td>
                       <td className="p-3">{o.people || '-'}</td>
+                      <td className="p-3">{o.payment_method || '-'}</td>
+                      <td className="p-3">{o.payment_id || '-'}</td>
                       <td className="p-3">
                         <div className="flex items-center gap-2">
                           <select

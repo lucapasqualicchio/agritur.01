@@ -35,8 +35,11 @@ export default async function handler(req: any, res: any) {
   const body = req.body || {};
   const email = String(body.email || '');
   const phone = body.phone != null ? String(body.phone) : null;
+  const address = body.address != null ? String(body.address) : null;
   const amount = Number(body.amount || 0);
   const people = body.people != null ? String(body.people) : null;
+  const payment_method = body.payment_method != null ? String(body.payment_method) : null;
+  const payment_id = body.payment_id != null ? String(body.payment_id) : null;
   // Se non fornita, usa la data odierna (YYYY-MM-DD)
   const date = body.date != null ? String(body.date) : new Date().toISOString().slice(0, 10);
 
@@ -46,18 +49,25 @@ export default async function handler(req: any, res: any) {
     orders: generateOrderCode(),
     email,
     phone,
+    address,
     date,
     people: people || null,
+    payment_method,
+    payment_id,
     status: 'nuovo',
     created_et: new Date().toISOString(),
     amount,
   };
 
-  const { data, error }: { data: any; error: PostgrestError | null } = await supabase
-    .from('orders')
-    .insert([row])
-    .select();
-
-  if (error) return res.status(500).json({ error: String(error.message || error) });
-  return res.status(200).json({ data });
+  // Inserimento con fallback: se alcune colonne opzionali non esistono, ritenta senza di esse.
+  let insert1 = await supabase.from('orders').insert([row]).select();
+  if (insert1.error) {
+    const msg = String((insert1.error as PostgrestError)?.message || insert1.error).toLowerCase();
+    if (msg.includes('address') || msg.includes('payment_method') || msg.includes('payment_id')) {
+      const { address: _a, payment_method: _pm, payment_id: _pid, ...rowSans } = row as any;
+      insert1 = await supabase.from('orders').insert([rowSans]).select();
+    }
+  }
+  if (insert1.error) return res.status(500).json({ error: String(insert1.error.message || insert1.error) });
+  return res.status(200).json({ data: insert1.data });
 }
