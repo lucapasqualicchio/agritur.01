@@ -10,6 +10,7 @@ const products: Product[] = [
   { id: 'miele-500', name: 'Miele di montagna 500g', price: 7.5 },
   { id: 'marmellata-250', name: 'Marmellata di frutti di bosco 250g', price: 5.9 },
   { id: 'formaggio-700', name: 'Formaggio stagionato 700g', price: 12.0 },
+  { id: 'promo-050', name: 'Articolo promozionale', price: 0.5 },
 ];
 
 export default function ProductCatalog() {
