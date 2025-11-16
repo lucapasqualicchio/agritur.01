@@ -78,13 +78,7 @@ export default function Header() {
             </div>
 
             <nav className="space-y-4">
-              <Link
-                to="/prenotazioni"
-                className="block px-4 py-3 text-lg font-semibold text-gray-900 hover:bg-green-50 hover:text-green-700 rounded-lg transition"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Prenotazioni
-              </Link>
+              {/* Link Prenotazioni rimosso: visibile solo in area Admin */}
 
               <Link
                 to="/chi-siamo"

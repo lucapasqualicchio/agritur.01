@@ -17,12 +17,7 @@ export default function Footer() {
             Via Roma, Trento (TN) | Tel: 327 113 1188 | info@agritur.it
           </p>
           <div className="mt-4 pt-4 border-t border-gray-800">
-            <Link 
-              to="/prenotazioni" 
-              className="text-green-400 hover:text-green-300 text-sm font-medium transition-colors"
-            >
-              📋 Visualizza Prenotazioni
-            </Link>
+            {/* Link prenotazioni rimosso: visibile solo per admin */}
           </div>
           <div className="mt-4 flex flex-wrap justify-center gap-6 text-xs text-gray-500">
             <Link to="/privacy-policy" className="hover:text-green-400 transition-colors">

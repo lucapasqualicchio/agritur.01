@@ -9,7 +9,7 @@ export default function CheckoutPage() {
   const { items, total, clearCart } = useCart();
   const [status, setStatus] = useState<string>('');
   const [finalTotal, setFinalTotal] = useState<number | null>(null);
-  const [method, setMethod] = useState<'card' | 'paypal'>('card');
+  const [method, setMethod] = useState<'card' | 'paypal'>('paypal');
   const paypalContainerRef = useRef<HTMLDivElement | null>(null);
   const paypalClientId = (import.meta.env.VITE_PAYPAL_CLIENT_ID || '').trim();
 
@@ -122,7 +122,7 @@ export default function CheckoutPage() {
     <div className="min-h-screen bg-white">
       <SEO
         title="Checkout – Dati di spedizione e pagamento"
-        description="Inserisci indirizzo di spedizione, seleziona il metodo di pagamento (carta o PayPal) e conferma l’ordine."
+        description="Inserisci indirizzo di spedizione e paga con PayPal."
         urlPath="/checkout"
       />
       <Header />
@@ -148,30 +148,14 @@ export default function CheckoutPage() {
                 <input name="zip" placeholder="CAP" className="border rounded px-3 py-2" required />
               </div>
 
-              <fieldset className="border rounded px-3 py-2">
-                <legend className="font-semibold">Metodo di pagamento</legend>
-                <div className="flex gap-6 mt-2">
-                  <label className="flex items-center gap-2">
-                    <input type="radio" name="payment" value="card" defaultChecked onChange={() => setMethod('card')} />
-                    Carta di credito
-                  </label>
-                  <label className="flex items-center gap-2">
-                    <input type="radio" name="payment" value="paypal" onChange={() => setMethod('paypal')} />
-                    PayPal
-                  </label>
-                </div>
-              </fieldset>
+              {/* Selettore metodo di pagamento rimosso: ora solo PayPal */}
 
-              {method === 'paypal' ? (
-                <div>
-                  {!paypalClientId && (
-                    <p className="text-red-700">Configura VITE_PAYPAL_CLIENT_ID per abilitare PayPal.</p>
-                  )}
-                  <div ref={paypalContainerRef} />
-                </div>
-              ) : (
-                <button type="submit" className="bg-green-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-800">Conferma e salva ordine</button>
-              )}
+              <div>
+                {!paypalClientId && (
+                  <p className="text-red-700">Configura VITE_PAYPAL_CLIENT_ID per abilitare PayPal.</p>
+                )}
+                <div ref={paypalContainerRef} />
+              </div>
 
               {status && <p className="text-sm text-gray-700">{status}</p>}
               <p className="text-xs text-gray-500">Login richiesto in futuro: predisporremo autenticazione email/password prima del pagamento reale.</p>
